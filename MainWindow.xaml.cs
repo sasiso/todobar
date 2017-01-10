@@ -1,10 +1,4 @@
-﻿// Decompiled with JetBrains decompiler
-// Type: todobar.MainWindow
-// Assembly: todobar, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-// MVID: 40D7304E-F994-44A4-B6EE-9F0B1D8D4D67
-// Assembly location: C:\data\Engineering\Tools\todobar.exe
-
-using System;
+﻿using System;
 using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
