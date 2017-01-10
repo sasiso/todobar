@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="db\data.cs" />
+    <Compile Include="db\db.cs" />
+    <Compile Include="db\db_xml.cs" />
     <Compile Include="Properties\Resources.cs" />
     <Compile Include="Properties\Settings.cs" />
     <Compile Include="MainWindow.xaml.cs">

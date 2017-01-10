@@ -74,6 +74,8 @@ namespace todobar
       this.DragMove();
     }
 
+  
+
     private void reload()
     {
       this.wrapPanel.Children.Clear();
