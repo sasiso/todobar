@@ -1,0 +1,20 @@
+<Window x:Class="todobar.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        KeyDown="Window_KeyDown" Background="Black" WindowStyle="None" BorderBrush="Green"
+        BorderThickness="5" ShowInTaskbar="false" ResizeMode="NoResize" Title="MainWindow" Topmost="true"
+        Height="350" Width="525">
+  <Grid>
+    <WrapPanel Name="wrapPanel" ScrollViewer.HorizontalScrollBarVisibility="Visible"
+               ScrollViewer.VerticalScrollBarVisibility="Visible" ScrollViewer.CanContentScroll="true"
+               HorizontalAlignment="Left" Height="260" Margin="20,10,0,0" VerticalAlignment="Top" Width="485"/>
+    <Button Click="RestTimer_Click" Name="RestTimer" BorderThickness="1"
+            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Green" Focusable="false"
+            Foreground="Green" Content="-" HorizontalAlignment="Left" Margin="431,313,0,0"
+            VerticalAlignment="Top" Width="76" Background="Black" RenderTransformOrigin="1,0.455"/>
+    <Button Click="WorkTimer_Click" Name="WorkTimer" BorderThickness="1"
+            Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderBrush="Green" Focusable="false"
+            Foreground="Green" Content="-" HorizontalAlignment="Left" Margin="352,313,0,0"
+            VerticalAlignment="Top" Width="76" Background="Black" RenderTransformOrigin="1,0.455"/>
+  </Grid>
+</Window>
