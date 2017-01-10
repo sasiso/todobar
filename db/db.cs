@@ -9,19 +9,14 @@ namespace todobar
     /// <summary>
     /// 
     /// </summary>
-    interface Db
+    interface IDatabase
     {
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="uniqueID"></param>
         /// <returns></returns>
-        IList<Data> readAll();
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns></returns>
-        bool saveAll(IList<Data> input);
+        Data read(string uniqueID);
         /// <summary>
         /// 
         /// </summary>

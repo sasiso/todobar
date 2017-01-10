@@ -9,10 +9,24 @@ namespace todobar
     /*!
      * This class represent Data asssociated with a todo time
      */
-    class Data
+    public class Data
     {
-       public string Text { get; set; }
-       public string ColorName { get; set;}
+        /// <summary>
+        /// 
+        /// </summary>
+        public string Text { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string ColorName { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string UniqueId{ get; set; }
+        public Data()
+        {
+            ColorName = "Grey";
+        }
 
     }
 }
