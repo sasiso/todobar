@@ -14,6 +14,9 @@ using System.Windows.Media;
 
 namespace todobar
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public partial class MainWindow : Window, IComponentConnector
     {
         private static string folder = "E:\\data\\localDB\\todo";
@@ -24,6 +27,9 @@ namespace todobar
         private static int restCounter = 15;
         private static int workCounter = 0;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public MainWindow()
         {
             this.InitializeComponent();
@@ -31,6 +37,10 @@ namespace todobar
             this.startTimer(MainWindow.TimerInterval);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="interval"></param>
         private void startTimer(double interval)
         {
             Timer timer = new Timer(interval);
@@ -39,6 +49,10 @@ namespace todobar
             this.processTimers();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         private TextBox createbox()
         {
             TextBox b = new TextBox();
@@ -147,22 +161,22 @@ namespace todobar
             foreach (FileInfo fileInfo in ((IEnumerable<FileInfo>)new DirectoryInfo(MainWindow.folder).GetFiles("*.*", SearchOption.AllDirectories)).OrderBy<FileInfo, DateTime>((Func<FileInfo, DateTime>)(t => t.CreationTime)).ToList<FileInfo>())
             {
                 FileInfo item = fileInfo;
-                string str = File.ReadAllText(item.FullName);
-                if (str.Length == 0)
-                {
-                    File.Delete(item.FullName);
-                }
-                else
-                {
+                string str = File.ReadAllText(item.FullName); 
                     var data = readFromDb(item.FullName);
-                    TextBox b = this.createbox();
-                    b.Background = StringToColor(data.ColorName);
-                    TextChangedEventHandler changedEventHandler = (TextChangedEventHandler)((s, a) => SaveInDB(GetDataFromTextBox(item.FullName, b)));
-                    b.MouseWheel += (MouseWheelEventHandler)((s, e) => this.TextBoxOnMouseWheel(item.FullName, b, s, e));
-                    b.Text = data.Text;
-                    b.TextChanged += changedEventHandler;
-                    this.wrapPanel.Children.Add((UIElement)b);
-                }
+                    if(data == null || data.Text.Length == 0)
+                    {
+                        File.Delete(item.FullName);
+                    }
+                    else
+                    {
+                        TextBox b = this.createbox();
+                        b.Background = StringToColor(data.ColorName);
+                        TextChangedEventHandler changedEventHandler = (TextChangedEventHandler)((s, a) => SaveInDB(GetDataFromTextBox(item.FullName, b)));
+                        b.MouseWheel += (MouseWheelEventHandler)((s, e) => this.TextBoxOnMouseWheel(item.FullName, b, s, e));
+                        b.Text = data.Text;
+                        b.TextChanged += changedEventHandler;
+                        this.wrapPanel.Children.Add((UIElement)b);
+                    }                
             }
         }
 
@@ -190,6 +204,7 @@ namespace todobar
             myUniqueFileName = MainWindow.folder + "\\" + myUniqueFileName;
             File.WriteAllText(myUniqueFileName, "");
             TextChangedEventHandler changedEventHandler = (TextChangedEventHandler)((s, a) => SaveInDB(GetDataFromTextBox(myUniqueFileName, b)));
+            b.MouseWheel += (MouseWheelEventHandler)((s, e) => this.TextBoxOnMouseWheel(myUniqueFileName, b, s, e));
             b.TextChanged += changedEventHandler;
             this.wrapPanel.Children.Add((UIElement)b);
             b.Focus();
