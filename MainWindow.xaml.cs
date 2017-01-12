@@ -77,7 +77,7 @@ namespace todobar
             {
                 b.Background = flag ? (Brush)Brushes.Red : (Brush)Brushes.Green;
             }
-                
+
             if (Brushes.Green == background)
             {
                 b.Background = flag ? (Brush)Brushes.DarkGray : (Brush)Brushes.Yellow;
@@ -138,6 +138,12 @@ namespace todobar
             return (Brush)Brushes.DarkGray;
         }
 
+        void OnTextEdited(string path, TextBox b)
+        {
+            b.ToolTip = b.Text;
+            SaveInDB(GetDataFromTextBox(path, b));
+        }
+
         Data GetDataFromTextBox(string path, TextBox b)
         {
             Data d = new Data();
@@ -161,22 +167,23 @@ namespace todobar
             foreach (FileInfo fileInfo in ((IEnumerable<FileInfo>)new DirectoryInfo(MainWindow.folder).GetFiles("*.*", SearchOption.AllDirectories)).OrderBy<FileInfo, DateTime>((Func<FileInfo, DateTime>)(t => t.CreationTime)).ToList<FileInfo>())
             {
                 FileInfo item = fileInfo;
-                string str = File.ReadAllText(item.FullName); 
-                    var data = readFromDb(item.FullName);
-                    if(data == null || data.Text.Length == 0)
-                    {
-                        File.Delete(item.FullName);
-                    }
-                    else
-                    {
-                        TextBox b = this.createbox();
-                        b.Background = StringToColor(data.ColorName);
-                        TextChangedEventHandler changedEventHandler = (TextChangedEventHandler)((s, a) => SaveInDB(GetDataFromTextBox(item.FullName, b)));
-                        b.MouseWheel += (MouseWheelEventHandler)((s, e) => this.TextBoxOnMouseWheel(item.FullName, b, s, e));
-                        b.Text = data.Text;
-                        b.TextChanged += changedEventHandler;
-                        this.wrapPanel.Children.Add((UIElement)b);
-                    }                
+                string str = File.ReadAllText(item.FullName);
+                var data = readFromDb(item.FullName);
+                if (data == null || data.Text.Length == 0)
+                {
+                    File.Delete(item.FullName);
+                }
+                else
+                {
+                    TextBox b = this.createbox();
+                    b.Background = StringToColor(data.ColorName);
+                    TextChangedEventHandler changedEventHandler = (TextChangedEventHandler)((s, a) => OnTextEdited(item.FullName, b));
+                    b.MouseWheel += (MouseWheelEventHandler)((s, e) => this.TextBoxOnMouseWheel(item.FullName, b, s, e));
+                    b.Text = data.Text;
+                    b.ToolTip = data.Text;
+                    b.TextChanged += changedEventHandler;
+                    this.wrapPanel.Children.Add((UIElement)b);
+                }
             }
         }
 
@@ -203,7 +210,7 @@ namespace todobar
             string myUniqueFileName = string.Format("{0}.txt", (object)Guid.NewGuid());
             myUniqueFileName = MainWindow.folder + "\\" + myUniqueFileName;
             File.WriteAllText(myUniqueFileName, "");
-            TextChangedEventHandler changedEventHandler = (TextChangedEventHandler)((s, a) => SaveInDB(GetDataFromTextBox(myUniqueFileName, b)));
+            TextChangedEventHandler changedEventHandler = (TextChangedEventHandler)((s, a) => OnTextEdited(myUniqueFileName, b));
             b.MouseWheel += (MouseWheelEventHandler)((s, e) => this.TextBoxOnMouseWheel(myUniqueFileName, b, s, e));
             b.TextChanged += changedEventHandler;
             this.wrapPanel.Children.Add((UIElement)b);
