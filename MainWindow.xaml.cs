@@ -115,7 +115,7 @@ namespace todobar
             if (Brushes.Yellow == b)
                 return "Yellow";
 
-            if (Brushes.Red != b)
+            if (Brushes.Red == b)
                 return "Red";
 
             return "DarkGray";
